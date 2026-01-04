@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Pulse - BionicAI Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .updates-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .updates-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .updates-title {
+            font-size: 36px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .updates-subtitle {
+            font-size: 18px;
+            color: var(--secondary-text);
+        }
+        
+        .updates-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .market-updates {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .update-card {
+            background-color: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .update-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .update-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .update-type.daily {
+            background-color: rgba(0, 255, 255, 0.2);
+            color: var(--accent-blue);
+        }
+        
+        .update-type.weekly {
+            background-color: rgba(255, 255, 0, 0.2);
+            color: var(--accent-yellow);
+        }
+        
+        .update-type.alert {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: var(--accent-red);
+        }
+        
+        .update-title {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .update-content {
+            color: var(--secondary-text);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .update-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--secondary-text);
+        }
+        
+        .news-sidebar {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .news-sidebar h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 20px;
+        }
+        
+        .news-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .news-title {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .news-source {
+            color: var(--accent-blue);
+            font-size: 12px;
+            margin-bottom: 0.25rem;
+        }
+        
+        .news-time {
+            color: var(--secondary-text);
+            font-size: 11px;
+        }
+        
+        .btc-overview {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .overview-item {
+            text-align: center;
+        }
+        
+        .overview-label {
+            color: var(--secondary-text);
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .overview-value {
+            color: var(--primary-text);
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .overview-change {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .overview-change.positive {
+            color: var(--accent-green);
+        }
+        
+        .overview-change.negative {
+            color: var(--accent-red);
+        }
+        
+        .sentiment-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .sentiment-bar {
+            flex: 1;
+            height: 8px;
+            background-color: var(--tertiary-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .sentiment-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow), var(--accent-green));
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .updates-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .news-sidebar {
+                position: static;
+            }
+            
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>BIONICAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="performance.html" class="nav-link">Performance</a></li>
+                <li><a href="strategy.html" class="nav-link">Strategy</a></li>
+                <li><a href="updates.html" class="nav-link active">Market Pulse</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="#terms" class="nav-link">Terms</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-left: 0;">
+        <div class="updates-container">
+            <div class="updates-header">
+                <h1 class="updates-title">MARKET PULSE</h1>
+                <p class="updates-subtitle">Real-time BTC market analysis and trading insights</p>
+            </div>
+
+            <!-- BTC Overview -->
+            <div class="btc-overview">
+                <h3 style="color: var(--accent-green); margin-bottom: 1rem;">BTC MARKET OVERVIEW</h3>
+                <div class="overview-grid">
+                    <div class="overview-item">
+                        <div class="overview-label">Current Price</div>
+                        <div class="overview-value" id="currentPrice">$--,---</div>
+                        <div class="overview-change" id="priceChange">--%</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-label">24h Volume</div>
+                        <div class="overview-value" id="volume">$--B</div>
+                        <div class="overview-change" id="volumeChange">--%</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-label">Market Cap</div>
+                        <div class="overview-value" id="marketCap">$--B</div>
+                        <div class="overview-change" id="capChange">--%</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-label">Market Sentiment</div>
+                        <div class="overview-value" id="sentiment">--</div>
+                        <div class="sentiment-indicator">
+                            <div class="sentiment-bar">
+                                <div class="sentiment-fill" id="sentimentBar" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="updates-grid">
+                <!-- Market Updates -->
+                <div class="market-updates">
+                    <h3 style="color: var(--accent-green); margin-bottom: 1.5rem;">LEADER UPDATES</h3>
+                    
+                    <div class="update-card">
+                        <div class="update-header">
+                            <span class="update-type daily">DAILY</span>
+                            <span class="update-time">Today, 9:00 AM</span>
+                        </div>
+                        <h4 class="update-title">Daily BTC Scoop</h4>
+                        <p class="update-content">
+                            Bulls charging? Watch for $65k breakout level. Volume increasing steadily across major exchanges. 
+                            RSI showing strength but not overbought yet. Keeping long positions from $62k entry, DCA ready if dip to $63k support.
+                        </p>
+                        <div class="update-meta">
+                            <span><i class="fas fa-user"></i> Lead Trader</span>
+                            <span><i class="fas fa-eye"></i> 234 views</span>
+                        </div>
+                    </div>
+
+                    <div class="update-card">
+                        <div class="update-header">
+                            <span class="update-type weekly">WEEKLY</span>
+                            <span class="update-time">3 days ago</span>
+                        </div>
+                        <h4 class="update-title">Weekly Swing Setup</h4>
+                        <p class="update-content">
+                            Holding Long positions, DCA ready if dip to $63k. Target 5-7% gains this week. 
+                            Market structure looks bullish with higher highs forming. Watch for potential short setup if we reject at $67k resistance.
+                        </p>
+                        <div class="update-meta">
+                            <span><i class="fas fa-user"></i> Lead Trader</span>
+                            <span><i class="fas fa-eye"></i> 456 views</span>
+                        </div>
+                    </div>
+
+                    <div class="update-card">
+                        <div class="update-header">
+                            <span class="update-type alert">ALERT</span>
+                            <span class="update-time">5 days ago</span>
+                        </div>
+                        <h4 class="update-title">Market Alert: Volatility Spike</h4>
+                        <p class="update-content">
+                            Unusual volatility detected. Reduced position size temporarily. 
+                            Waiting for clear directional bias before adding new positions. Current positions: 2 Long, 1 Short - all with tight stops.
+                        </p>
+                        <div class="update-meta">
+                            <span><i class="fas fa-user"></i> Lead Trader</span>
+                            <span><i class="fas fa-eye"></i> 789 views</span>
+                        </div>
+                    </div>
+
+                    <div class="update-card">
+                        <div class="update-header">
+                            <span class="update-type daily">DAILY</span>
+                            <span class="update-time">1 week ago</span>
+                        </div>
+                        <h4 class="update-title">Weekend Analysis</h4>
+                        <p class="update-content">
+                            BTC holding above $60k support nicely. Weekend volume low as expected, 
+                            but price action suggests accumulation. Monday could see breakout if volume returns. Ready for both scenarios.
+                        </p>
+                        <div class="update-meta">
+                            <span><i class="fas fa-user"></i> Lead Trader</span>
+                            <span><i class="fas fa-eye"></i> 321 views</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News Sidebar -->
+                <div class="news-sidebar">
+                    <h3>CRYPTO NEWS</h3>
+                    <div id="newsContainer">
+                        <!-- News will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-left: 0;">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BIONICAI TRADING</h4>
+                <p>Copy elite BTC trades with proven strategies</p>
+            </div>
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="strategy.html">Strategy</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMMUNITY</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BionicAI Trading. All rights reserved. | <a href="#terms">Terms & Conditions</a> | <a href="#disclaimer">Risk Disclaimer</a></p>
+        </div>
+    </footer>
+
+    <script src="js/updates.js"></script>
+</body>
+</html>

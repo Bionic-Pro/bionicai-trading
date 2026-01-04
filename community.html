@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - BionicAI Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .community-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .community-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .community-title {
+            font-size: 36px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .community-subtitle {
+            font-size: 18px;
+            color: var(--secondary-text);
+        }
+        
+        .community-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .social-section {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .social-section h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+        }
+        
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: var(--tertiary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--primary-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .social-button:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        .social-button.telegram {
+            border-left: 4px solid #0088cc;
+        }
+        
+        .social-button.discord {
+            border-left: 4px solid #5865F2;
+        }
+        
+        .social-icon {
+            font-size: 32px;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .social-button.telegram .social-icon {
+            color: #0088cc;
+        }
+        
+        .social-button.discord .social-icon {
+            color: #5865F2;
+        }
+        
+        .social-info h4 {
+            margin-bottom: 0.25rem;
+        }
+        
+        .social-info p {
+            color: var(--secondary-text);
+            font-size: 14px;
+        }
+        
+        .social-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 14px;
+            color: var(--secondary-text);
+        }
+        
+        .qa-section {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .qa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .qa-header h3 {
+            color: var(--accent-green);
+            font-size: 24px;
+        }
+        
+        .ask-question-btn {
+            background: var(--gradient-green);
+            color: var(--primary-bg);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .ask-question-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .qa-form {
+            background-color: var(--tertiary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .qa-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-text);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--primary-text);
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .submit-btn {
+            background: var(--gradient-green);
+            color: var(--primary-bg);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cancel-btn {
+            background-color: var(--tertiary-bg);
+            color: var(--primary-text);
+            border: 2px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .qa-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .qa-item {
+            background-color: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .qa-item:hover {
+            border-color: var(--accent-green);
+        }
+        
+        .qa-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .qa-question {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .qa-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 12px;
+            color: var(--secondary-text);
+        }
+        
+        .qa-answer {
+            color: var(--secondary-text);
+            line-height: 1.6;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .qa-answer-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-green);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .trading-101 {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .trading-101 h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+        }
+        
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tutorial-card {
+            background-color: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tutorial-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        .tutorial-icon {
+            font-size: 32px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .tutorial-title {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tutorial-description {
+            color: var(--secondary-text);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .tutorial-duration {
+            color: var(--accent-blue);
+            font-size: 12px;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tutorial-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .qa-question-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>BIONICAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="performance.html" class="nav-link">Performance</a></li>
+                <li><a href="strategy.html" class="nav-link">Strategy</a></li>
+                <li><a href="updates.html" class="nav-link">Market Pulse</a></li>
+                <li><a href="community.html" class="nav-link active">Community</a></li>
+                <li><a href="#terms" class="nav-link">Terms</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-left: 0;">
+        <div class="community-container">
+            <div class="community-header">
+                <h1 class="community-title">TRADING COMMUNITY</h1>
+                <p class="community-subtitle">Connect with fellow traders and learn from the best</p>
+            </div>
+
+            <!-- Trading 101 Section -->
+            <div class="trading-101">
+                <h3><i class="fas fa-graduation-cap"></i> TRADING 101</h3>
+                <div class="tutorial-grid">
+                    <div class="tutorial-card" onclick="openTutorial('dca')">
+                        <div class="tutorial-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h4 class="tutorial-title">What's DCA?</h4>
+                        <p class="tutorial-description">
+                            Dollar-Cost Averaging explained - Learn how to buy more when price dips to lower your average entry cost.
+                        </p>
+                        <div class="tutorial-duration">
+                            <i class="fas fa-clock"></i> 5 min read
+                        </div>
+                    </div>
+
+                    <div class="tutorial-card" onclick="openTutorial('leverage')">
+                        <div class="tutorial-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4 class="tutorial-title">Understanding Leverage</h4>
+                        <p class="tutorial-description">
+                            x10 leverage explained - Learn how to amplify gains while managing the increased risks.
+                        </p>
+                        <div class="tutorial-duration">
+                            <i class="fas fa-clock"></i> 7 min read
+                        </div>
+                    </div>
+
+                    <div class="tutorial-card" onclick="openTutorial('swing')">
+                        <div class="tutorial-icon">
+                            <i class="fas fa-wave-square"></i>
+                        </div>
+                        <h4 class="tutorial-title">Swing Trading Basics</h4>
+                        <p class="tutorial-description">
+                            Hold for days/weeks to ride the waves - Learn the art of medium-term trend trading.
+                        </p>
+                        <div class="tutorial-duration">
+                            <i class="fas fa-clock"></i> 10 min read
+                        </div>
+                    </div>
+
+                    <div class="tutorial-card" onclick="openTutorial('risk')">
+                        <div class="tutorial-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="tutorial-title">Risk Management 101</h4>
+                        <p class="tutorial-description">
+                            Protect your capital - Learn stop-losses, position sizing, and portfolio management.
+                        </p>
+                        <div class="tutorial-duration">
+                            <i class="fas fa-clock"></i> 8 min read
+                        </div>
+                    </div>
+
+                    <div class="tutorial-card" onclick="openTutorial('technical')">
+                        <div class="tutorial-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="tutorial-title">Technical Analysis</h4>
+                        <p class="tutorial-description">
+                            Read the charts - Basic patterns, indicators, and support/resistance levels.
+                        </p>
+                        <div class="tutorial-duration">
+                            <i class="fas fa-clock"></i> 12 min read
+                        </div>
+                    </div>
+
+                    <div class="tutorial-card" onclick="openTutorial('psychology')">
+                        <div class="tutorial-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4 class="tutorial-title">Trading Psychology</h4>
+                        <p class="tutorial-description">
+                            Master your emotions - Overcome fear, greed, and FOMO for better trading decisions.
+                        </p>
+                        <div class="tutorial-duration">
+                            <i class="fas fa-clock"></i> 6 min read
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="community-grid">
+                <!-- Social Channels -->
+                <div class="social-section">
+                    <h3><i class="fas fa-users"></i> JOIN OUR CHANNELS</h3>
+                    <div class="social-buttons">
+                        <a href="https://t.me/bionicai_trading" target="_blank" class="social-button telegram">
+                            <div class="social-icon">
+                                <i class="fab fa-telegram"></i>
+                            </div>
+                            <div class="social-info">
+                                <h4>Telegram Community</h4>
+                                <p>Real-time trade alerts and market discussion</p>
+                                <div class="social-stats">
+                                    <span><i class="fas fa-users"></i> 2,847 members</span>
+                                    <span><i class="fas fa-bolt"></i> Very active</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="https://discord.gg/bionicai" target="_blank" class="social-button discord">
+                            <div class="social-icon">
+                                <i class="fab fa-discord"></i>
+                            </div>
+                            <div class="social-info">
+                                <h4>Discord Server</h4>
+                                <p>Voice chats, analysis, and community support</p>
+                                <div class="social-stats">
+                                    <span><i class="fas fa-users"></i> 1,523 members</span>
+                                    <span><i class="fas fa-comments"></i> 24/7 chat</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Q&A Section -->
+                <div class="qa-section">
+                    <div class="qa-header">
+                        <h3><i class="fas fa-question-circle"></i> Q&A FORUM</h3>
+                        <button class="ask-question-btn" onclick="toggleQAForm()">
+                            <i class="fas fa-plus"></i> Ask Question
+                        </button>
+                    </div>
+
+                    <!-- Q&A Form -->
+                    <div class="qa-form" id="qaForm">
+                        <div class="form-group">
+                            <label for="questionName">Name (optional)</label>
+                            <input type="text" id="questionName" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="questionText">Your Question</label>
+                            <textarea id="questionText" rows="4" placeholder="Ask anything about trading, strategy, or the platform..."></textarea>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="submit-btn" onclick="submitQuestion()">
+                                <i class="fas fa-paper-plane"></i> Submit
+                            </button>
+                            <button class="cancel-btn" onclick="toggleQAForm()">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Q&A List -->
+                    <div class="qa-list" id="qaList">
+                        <!-- Q&A items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="tutorialTitle">Tutorial</h2>
+                <button class="modal-close" onclick="closeModal('tutorialModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="tutorialContent">
+                <!-- Tutorial content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-left: 0;">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BIONICAI TRADING</h4>
+                <p>Copy elite BTC trades with proven strategies</p>
+            </div>
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="strategy.html">Strategy</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMMUNITY</h4>
+                <div class="social-links">
+                    <a href="https://t.me/bionicai_trading" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+                    <a href="https://discord.gg/bionicai" target="_blank" class="social-link">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BionicAI Trading. All rights reserved. | <a href="#terms">Terms & Conditions</a> | <a href="#disclaimer">Risk Disclaimer</a></p>
+        </div>
+    </footer>
+
+    <script src="js/community.js"></script>
+</body>
+</html>

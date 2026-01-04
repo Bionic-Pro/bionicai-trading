@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategy - BionicAI Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .strategy-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .strategy-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .strategy-title {
+            font-size: 36px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .strategy-subtitle {
+            font-size: 18px;
+            color: var(--secondary-text);
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .main-strategy {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .strategy-section {
+            margin-bottom: 2rem;
+        }
+        
+        .strategy-section h3 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 24px;
+        }
+        
+        .strategy-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--tertiary-bg);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-item:hover {
+            border: 1px solid var(--accent-green);
+        }
+        
+        .strategy-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-bg);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .strategy-content h4 {
+            color: var(--primary-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .strategy-content p {
+            color: var(--secondary-text);
+            line-height: 1.6;
+        }
+        
+        .slang-sidebar {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .slang-sidebar h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 20px;
+        }
+        
+        .slang-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .slang-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .slang-term {
+            color: var(--accent-yellow);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 16px;
+        }
+        
+        .slang-definition {
+            color: var(--secondary-text);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .risk-section {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 2px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .risk-section h3 {
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+        }
+        
+        .risk-list {
+            list-style: none;
+        }
+        
+        .risk-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--primary-text);
+        }
+        
+        .risk-list li::before {
+            content: '⚠';
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+        }
+        
+        .faq-section {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            color: var(--secondary-text);
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '−';
+        }
+        
+        .faq-question::after {
+            content: '+';
+            color: var(--accent-green);
+        }
+        
+        @media (max-width: 768px) {
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .slang-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>BIONICAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="performance.html" class="nav-link">Performance</a></li>
+                <li><a href="strategy.html" class="nav-link active">Strategy</a></li>
+                <li><a href="updates.html" class="nav-link">Market Pulse</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="#terms" class="nav-link">Terms</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-left: 0;">
+        <div class="strategy-container">
+            <div class="strategy-header">
+                <h1 class="strategy-title">ELITE TRADING STRATEGY</h1>
+                <p class="strategy-subtitle">Proven BTC/USDT swing trading with systematic risk management</p>
+            </div>
+
+            <div class="strategy-grid">
+                <!-- Main Strategy Content -->
+                <div class="main-strategy">
+                    <div class="strategy-section">
+                        <h3>CORE PLAY</h3>
+                        
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>0.2 BTC Per Position</h4>
+                                <p>Consistent position sizing across all trades. Both Long and Short directions for market-neutral approach. 99% focus on BTC/USDT for laser-sharp execution.</p>
+                            </div>
+                        </div>
+
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>Smart DCA (1-2 Steps)</h4>
+                                <p>Dollar-Cost Average into positions on market dips. Add 1-2 times to lower average entry cost. Maximum 2 DCA steps per position to control risk.</p>
+                            </div>
+                        </div>
+
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>x10 Leverage</h4>
+                                <p>Amplify gains with controlled leverage. x10 provides optimal risk/reward for BTC swing trading. Always use stop-losses to protect downside.</p>
+                            </div>
+                        </div>
+
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>5%+ Profit Targets</h4>
+                                <p>Systematic profit taking starting at 5%. Scale targets based on market conditions - sometimes hold for 10-15% on strong trends. Never get greedy.</p>
+                            </div>
+                        </div>
+
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>Swing Trading Style</h4>
+                                <p>Hold positions for days to weeks to ride major trends. Occasionally momentum plays for quick entries/exits on strong signals. Patience is key.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="strategy-section">
+                        <h3>RISK MANAGEMENT</h3>
+                        
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>Stop-Loss Protection</h4>
+                                <p>Always use stop-losses at 3-4% below entry (for longs) or above entry (for shorts). Never risk more than 2% per trade.</p>
+                            </div>
+                        </div>
+
+                        <div class="strategy-item">
+                            <div class="strategy-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="strategy-content">
+                                <h4>Position Correlation</h4>
+                                <p>Maximum 5 concurrent positions. Avoid overexposure in same direction. Balance longs and shorts based on market analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trading Slang Sidebar -->
+                <div class="slang-sidebar">
+                    <h3>TRADING SLANG 101</h3>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">GO LONG</div>
+                        <div class="slang-definition">Buy position betting price goes up. Profit when BTC price increases.</div>
+                    </div>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">SHORT IT</div>
+                        <div class="slang-definition">Sell position betting price goes down. Profit when BTC price decreases.</div>
+                    </div>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">DCA</div>
+                        <div class="slang-definition">Dollar-Cost Averaging - Add more to position at lower prices to reduce average entry cost.</div>
+                    </div>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">LEVERAGE</div>
+                        <div class="slang-definition">Using borrowed funds to amplify position size. x10 means 10x exposure with 1x capital.</div>
+                    </div>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">TP (Take Profit)</div>
+                        <div class="slang-definition">Pre-set price to automatically close profitable position and lock in gains.</div>
+                    </div>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">SWING TRADE</div>
+                        <div class="slang-definition">Hold for days/weeks to capture medium-term price movements and trends.</div>
+                    </div>
+                    
+                    <div class="slang-item">
+                        <div class="slang-term">DYOR</div>
+                        <div class="slang-definition">Do Your Own Research - Always verify signals and never blindly copy trades.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Warning Section -->
+            <div class="risk-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> RISK WARNING</h3>
+                <ul class="risk-list">
+                    <li>Leverage can wipe positions FAST - x10 means 10% move = 100% loss</li>
+                    <li>Crypto markets are volatile 24/7 - prices can gap while you sleep</li>
+                    <li>Past performance doesn't guarantee future results</li>
+                    <li>Never trade more than you can afford to lose completely</li>
+                    <li>This strategy is for INFORMATION ONLY - not financial advice</li>
+                    <li>Market conditions change - adapt or sit out when uncertain</li>
+                </ul>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h3 class="chart-title">FREQUENTLY ASKED QUESTIONS</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Why 99% BTC/USDT focus?</div>
+                    <div class="faq-answer">
+                        Bitcoin has the highest liquidity, clearest trends, and most predictable patterns. Specializing in one pair allows for deeper analysis and better execution. No distraction from altcoins' noise.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What about market crashes?</div>
+                    <div class="faq-answer">
+                        Crashes are actually opportunities. The strategy includes short positions to profit from downturns. DCA allows averaging into BTC at discount prices during panic sells.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do you handle sideways markets?</div>
+                    <div class="faq-answer">
+                        Reduce position size and frequency during choppy/sideways periods. Sometimes it's better to sit in cash and wait for clear trends. Patience beats overtrading.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I customize the strategy?</div>
+                    <div class="faq-answer">
+                        Yes! You can adjust position size, leverage, and profit targets when setting up copy trading. But understand the risk-reward implications of any changes.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What's the minimum to start?</div>
+                    <div class="faq-answer">
+                        Technically you can start with 0.2 BTC + margin for x10 leverage (~2 BTC total). But recommend having at least 5 BTC for proper risk management across multiple positions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-left: 0;">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BIONICAI TRADING</h4>
+                <p>Copy elite BTC trades with proven strategies</p>
+            </div>
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="performance.html">Performance</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMMUNITY</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BionicAI Trading. All rights reserved. | <a href="#terms">Terms & Conditions</a> | <a href="#disclaimer">Risk Disclaimer</a></p>
+        </div>
+    </footer>
+
+    <script src="js/strategy.js"></script>
+</body>
+</html>

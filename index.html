@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BionicAI Trading - Copy Elite BTC Trades</title>
+    <meta name="description" content="Copy elite BTC futures trades with proven swing strategies. Professional copy trading platform for crypto traders.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>BIONICAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#strategy" class="nav-link">Strategy</a></li>
+                <li><a href="#performance" class="nav-link">Performance</a></li>
+                <li><a href="#updates" class="nav-link">Market Pulse</a></li>
+                <li><a href="#community" class="nav-link">Community</a></li>
+                <li><a href="#terms" class="nav-link">Terms</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Quick Access</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#home" class="sidebar-link"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#copy-setup" class="sidebar-link"><i class="fas fa-copy"></i> Start Copying</a></li>
+            <li><a href="#performance" class="sidebar-link"><i class="fas fa-chart-line"></i> Performance</a></li>
+            <li><a href="#strategy" class="sidebar-link"><i class="fas fa-bullseye"></i> Strategy Details</a></li>
+            <li><a href="#updates" class="sidebar-link"><i class="fas fa-newspaper"></i> Market Updates</a></li>
+            <li><a href="#community" class="sidebar-link"><i class="fas fa-users"></i> Community</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">COPY ELITE BTC TRADES</h1>
+                <p class="hero-subtitle">SWING BIG, WIN STEADY</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value">70%+</span>
+                        <span class="stat-label">WIN RATE</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">5%+</span>
+                        <span class="stat-label">MIN PROFIT</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">x10</span>
+                        <span class="stat-label">LEVERAGE</span>
+                    </div>
+                </div>
+                <button class="cta-button pulse" onclick="showCopySetup()">
+                    <i class="fas fa-rocket"></i>
+                    START COPYING NOW
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="btc-ticker">
+                    <div class="ticker-header">
+                        <i class="fab fa-bitcoin"></i>
+                        <span>BTC/USDT</span>
+                    </div>
+                    <div class="ticker-price" id="btcPrice">
+                        <span class="price">$--,---</span>
+                        <span class="change" id="btcChange">--%</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="btcChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Positions -->
+        <section class="current-positions">
+            <h2>CURRENT POSITIONS</h2>
+            <div class="positions-grid" id="positionsGrid">
+                <!-- Positions will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Leader Bio -->
+        <section class="leader-bio">
+            <div class="bio-content">
+                <div class="bio-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="bio-text">
+                    <h3>PRO TRADER</h3>
+                    <p>5+ years in BTC futures. Focus: Steady swings, smart DCA. 99% BTC/USDT specialization for laser-sharp execution.</p>
+                    <div class="bio-stats">
+                        <div class="bio-stat">
+                            <i class="fas fa-trophy"></i>
+                            <span>500+ Trades</span>
+                        </div>
+                        <div class="bio-stat">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>70% Win Rate</span>
+                        </div>
+                        <div class="bio-stat">
+                            <i class="fas fa-coins"></i>
+                            <span>0.2 BTC/Pos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Copy Trading Setup Modal -->
+    <div id="copySetupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>START COPY TRADING</h2>
+                <button class="modal-close" onclick="closeModal('copySetupModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="wizard-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Connect Blofin</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Set Risk</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Confirm</div>
+                    </div>
+                </div>
+                
+                <div class="wizard-content">
+                    <!-- Step 1: Connect Blofin -->
+                    <div class="wizard-step-content active" data-step="1">
+                        <h3>Connect Your Blofin Account</h3>
+                        <p>Your funds stay in your Blofin wallet – we don't touch 'em.</p>
+                        <div class="form-group">
+                            <label for="apiKey">API Key</label>
+                            <input type="password" id="apiKey" placeholder="Enter your Blofin API Key">
+                            <small>Get your API key from Blofin settings → API Management</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="secretKey">Secret Key</label>
+                            <input type="password" id="secretKey" placeholder="Enter your Secret Key">
+                        </div>
+                        <button class="wizard-next" onclick="nextWizardStep()">Next →</button>
+                    </div>
+                    
+                    <!-- Step 2: Risk Parameters -->
+                    <div class="wizard-step-content" data-step="2">
+                        <h3>Set Your Risk Parameters</h3>
+                        <p>Mirror the leader's proven strategy or customize to your comfort.</p>
+                        <div class="form-group">
+                            <label for="positionSize">Position Size (BTC)</label>
+                            <input type="number" id="positionSize" value="0.2" step="0.01" min="0.01">
+                            <small>Leader uses 0.2 BTC per position</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="leverage">Leverage</label>
+                            <select id="leverage">
+                                <option value="5">x5</option>
+                                <option value="10" selected>x10</option>
+                                <option value="15">x15</option>
+                                <option value="20">x20</option>
+                            </select>
+                            <small>Leader uses x10 leverage</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxPositions">Max Open Positions</label>
+                            <input type="number" id="maxPositions" value="5" min="1" max="10">
+                        </div>
+                        <div class="wizard-buttons">
+                            <button class="wizard-prev" onclick="prevWizardStep()">← Previous</button>
+                            <button class="wizard-next" onclick="nextWizardStep()">Next →</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Confirmation -->
+                    <div class="wizard-step-content" data-step="3">
+                        <h3>Confirm Your Strategy</h3>
+                        <div class="strategy-summary">
+                            <h4>CORE PLAY</h4>
+                            <ul>
+                                <li><strong>0.2 BTC per position</strong> - Both Long and Short</li>
+                                <li><strong>DCA 1-2 times</strong> - Average in on dips</li>
+                                <li><strong>x10 Leverage</strong> - Amplified gains</li>
+                                <li><strong>5%+ Profit Target</strong> - Lock in gains systematically</li>
+                                <li><strong>Swing Style</strong> - Hold for days/weeks</li>
+                                <li><strong>99% BTC/USDT</strong> - Laser-focused execution</li>
+                            </ul>
+                        </div>
+                        <div class="risk-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p><strong>NOT FINANCIAL ADVICE</strong> - Trading crypto involves high risk. You could lose all your capital. Trade at your own risk.</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="acceptTerms">
+                                <span>I accept the Terms & Conditions and acknowledge the risks</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="ageVerify">
+                                <span>I am 18+ years old</span>
+                            </label>
+                        </div>
+                        <div class="wizard-buttons">
+                            <button class="wizard-prev" onclick="prevWizardStep()">← Previous</button>
+                            <button class="cta-button" onclick="startCopying()" id="startCopyBtn" disabled>
+                                <i class="fas fa-rocket"></i>
+                                START COPYING
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2>TERMS & CONDITIONS</h2>
+                <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="terms-content">
+                    <h3>RISK DISCLAIMER</h3>
+                    <p>By using this interface, you agree:</p>
+                    <ul>
+                        <li>This is <strong>NOT financial advice</strong></li>
+                        <li>Trading crypto involves <strong>high risk</strong> – you could lose all your capital</li>
+                        <li>Leader's strategy (0.2 BTC/pos, x10 lev, etc.) is for <strong>information only</strong></li>
+                        <li><strong>No guarantees</strong> on performance</li>
+                        <li>Comply with Blofin's terms of service</li>
+                        <li><strong>Age 18+ only</strong></li>
+                    </ul>
+                    
+                    <h3>PRIVACY & SECURITY</h3>
+                    <ul>
+                        <li>Your funds stay in your Blofin wallet – we don't touch 'em</li>
+                        <li>API keys are encrypted and stored securely</li>
+                        <li>No personal data is shared with third parties</li>
+                    </ul>
+                    
+                    <h3>SERVICE TERMS</h3>
+                    <ul>
+                        <li>Free service – no premium tiers</li>
+                        <li>Service availability depends on Blofin API status</li>
+                        <li>We reserve the right to terminate service for violations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BIONICAI TRADING</h4>
+                <p>Copy elite BTC trades with proven strategies</p>
+            </div>
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="#strategy">Strategy</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMMUNITY</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BionicAI Trading. All rights reserved. | <a href="#terms">Terms & Conditions</a> | <a href="#disclaimer">Risk Disclaimer</a></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

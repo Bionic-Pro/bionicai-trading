@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance - BionicAI Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .performance-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .performance-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .performance-title {
+            font-size: 36px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        .stat-icon {
+            font-size: 48px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--secondary-text);
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .chart-card {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .chart-title {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 20px;
+        }
+        
+        .trades-table {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        .trades-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .trades-table th,
+        .trades-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .trades-table th {
+            color: var(--accent-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        
+        .trade-profit {
+            color: var(--accent-green);
+        }
+        
+        .trade-loss {
+            color: var(--accent-red);
+        }
+        
+        .trade-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .trade-type.long {
+            background-color: rgba(0, 255, 0, 0.2);
+            color: var(--accent-green);
+        }
+        
+        .trade-type.short {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: var(--accent-red);
+        }
+        
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (same as index.html) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>BIONICAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="performance.html" class="nav-link active">Performance</a></li>
+                <li><a href="strategy.html" class="nav-link">Strategy</a></li>
+                <li><a href="updates.html" class="nav-link">Market Pulse</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="#terms" class="nav-link">Terms</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-left: 0;">
+        <div class="performance-container">
+            <div class="performance-header">
+                <h1 class="performance-title">TRADING PERFORMANCE</h1>
+                <p>Proven track record with consistent BTC/USDT swing trading</p>
+            </div>
+
+            <!-- Key Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-value">72%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-value">524</div>
+                    <div class="stat-label">Total Trades</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-value">4.2%</div>
+                    <div class="stat-label">Avg ROI/Trade</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-value">2204%</div>
+                    <div class="stat-label">Total ROI</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="stat-value">1.8</div>
+                    <div class="stat-label">Sharpe Ratio</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="stat-value">12.3%</div>
+                    <div class="stat-label">Max Drawdown</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <h3 class="chart-title">Profit Over Time</h3>
+                    <canvas id="profitChart" height="200"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Win/Loss Distribution</h3>
+                    <canvas id="winLossChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Trades Table -->
+            <div class="trades-table">
+                <h3 class="chart-title">Recent Trades</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Entry</th>
+                            <th>Exit</th>
+                            <th>Size (BTC)</th>
+                            <th>Leverage</th>
+                            <th>P&L</th>
+                            <th>ROI%</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tradesTableBody">
+                        <!-- Trades will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-left: 0;">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BIONICAI TRADING</h4>
+                <p>Copy elite BTC trades with proven strategies</p>
+            </div>
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="strategy.html">Strategy</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMMUNITY</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BionicAI Trading. All rights reserved. | <a href="#terms">Terms & Conditions</a> | <a href="#disclaimer">Risk Disclaimer</a></p>
+        </div>
+    </footer>
+
+    <script src="js/performance.js"></script>
+</body>
+</html>
