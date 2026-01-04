@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Results - BionicAI Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .results-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .results-title {
+            font-size: 36px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .results-subtitle {
+            font-size: 18px;
+            color: var(--secondary-text);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .blofin-section {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .blofin-section h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 20px;
+            color: var(--accent-green);
+            font-size: 14px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .api-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .api-form input {
+            flex: 1;
+            padding: 0.75rem;
+            background-color: var(--tertiary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--primary-text);
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .api-form button {
+            background: var(--gradient-green);
+            color: var(--primary-bg);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .api-form button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .results-table th,
+        .results-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .results-table th {
+            color: var(--accent-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        
+        .trade-profit {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+        
+        .trade-loss {
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+        
+        .trade-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .trade-type.long {
+            background-color: rgba(0, 255, 0, 0.2);
+            color: var(--accent-green);
+        }
+        
+        .trade-type.short {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: var(--accent-red);
+        }
+        
+        .profit-shares {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .profit-shares h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .upload-section {
+            margin-bottom: 2rem;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent-green);
+            background-color: rgba(0, 255, 0, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--accent-green);
+            background-color: rgba(0, 255, 0, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-text {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-subtext {
+            color: var(--secondary-text);
+            font-size: 14px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            background-color: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        .gallery-info {
+            padding: 1rem;
+        }
+        
+        .gallery-title {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--secondary-text);
+        }
+        
+        .gallery-profit {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+        
+        .gallery-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .gallery-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--primary-text);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--primary-bg);
+        }
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--secondary-text);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--primary-text);
+            font-size: 32px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: var(--accent-green);
+        }
+        
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .api-form {
+                flex-direction: column;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>BIONICAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="performance.html" class="nav-link">Performance</a></li>
+                <li><a href="strategy.html" class="nav-link">Strategy</a></li>
+                <li><a href="updates.html" class="nav-link">Market Pulse</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="results.html" class="nav-link active">Results</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-left: 0;">
+        <div class="results-container">
+            <div class="results-header">
+                <h1 class="results-title">TRADING RESULTS</h1>
+                <p class="results-subtitle">Live Blofin API data and profit share gallery</p>
+            </div>
+
+            <div class="results-grid">
+                <!-- Blofin API Section -->
+                <div class="blofin-section">
+                    <h3><i class="fas fa-chart-line"></i> BLOFIN LIVE RESULTS</h3>
+                    
+                    <div class="api-status">
+                        <div class="status-dot"></div>
+                        <span>API Connected</span>
+                    </div>
+
+                    <div class="api-form">
+                        <input type="text" id="apiKey" placeholder="Enter Blofin API Key">
+                        <button onclick="fetchBlofinResults()">
+                            <i class="fas fa-sync"></i> Fetch Results
+                        </button>
+                    </div>
+
+                    <div class="stats-overview">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalProfit">+$2,847</div>
+                            <div class="stat-label">Total Profit</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="winRate">73%</div>
+                            <div class="stat-label">Win Rate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalTrades">47</div>
+                            <div class="stat-label">Total Trades</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgProfit">+$60.57</div>
+                            <div class="stat-label">Avg Profit/Trade</div>
+                        </div>
+                    </div>
+
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Entry</th>
+                                <th>Exit</th>
+                                <th>P&L</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blofinResults">
+                            <!-- Results will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Profit Shares Section -->
+                <div class="profit-shares">
+                    <h3><i class="fas fa-images"></i> PROFIT SHARES</h3>
+                    
+                    <div class="upload-section">
+                        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">Click to upload or drag & drop</div>
+                            <div class="upload-subtext">PNG, JPG, GIF up to 10MB</div>
+                            <input type="file" id="fileInput" class="file-input" multiple accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="gallery-grid" id="galleryGrid">
+                        <!-- Gallery items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('imageModal')">&times;</button>
+            <img id="modalImage" class="modal-image" src="" alt="Trade Screenshot">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-left: 0;">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BIONICAI TRADING</h4>
+                <p>Copy elite BTC trades with proven strategies</p>
+            </div>
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="strategy.html">Strategy</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMMUNITY</h4>
+                <div class="social-links">
+                    <a href="https://t.me/bionicai_trading" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+                    <a href="https://discord.gg/bionicai" target="_blank" class="social-link">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BionicAI Trading. All rights reserved. | <a href="#terms">Terms & Conditions</a> | <a href="#disclaimer">Risk Disclaimer</a></p>
+        </div>
+    </footer>
+
+    <script src="js/results.js"></script>
+</body>
+</html>
